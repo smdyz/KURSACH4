@@ -43,7 +43,8 @@ class GetVacancy(API):
         vacs = json.loads(answer.text)['items']
         s = 0
         for vac in vacs:
-            self.vac_list.append({"name": vac["name"],
+            self.vac_list.append({"id": vac["id"],
+                                  "name": vac["name"],
                                   "salary": vac["salary"],
                                   "url": vac["alternate_url"]})
 
@@ -64,20 +65,31 @@ class GetVacancy(API):
             with open(full_root, 'w', encoding='utf-8') as file:
                 file.write(json.dumps(self.vac_list, indent=2, ensure_ascii=False))
 
-    # def __eq__(self, other):
-    #     return True if (self.get_vacancies()["salary"] == other.salary) else False
-    #
-    # def __le__(self, other):
-    #     return True if (self.salary <= other.salary) else False
-    #
-    # def __lt__(self, other):
-    #     return True if (self.salary < other.salary) else False
-    #
-    # def __ge__(self, other):
-    #     return True if (self.salary >= other.salary) else False
-    #
-    # def __gt__(self, other):
-    #     return True if (self.salary > other.salary) else False
+    def __eq__(self, other):
+        return True if (self.get_vacancies["salary"] == other.salary) else False
+
+    def __le__(self, other):
+        return True if (self.get_vacancies["salary"] <= other.salary) else False
+
+    def __lt__(self, other):
+        return True if (self.get_vacancies["salary"] < other.salary) else False
+
+    def __ge__(self, other):
+        return True if (self.get_vacancies["salary"] >= other.salary) else False
+
+    def __gt__(self, other):
+        return True if (self.get_vacancies["salary"] > other.salary) else False
+
+
+class CertainVacancy(GetVacancy):
+
+    def __init__(self, name: str, id_vac: int):
+        super().__init__(name)
+        self.id = id_vac
+
+    def full_info(self):
+        info_json = requests.get(f"https://api.hh.ru/vacancies/{self.id}")
+        print(json.dumps(info_json.json(), indent=2, ensure_ascii=False))
 
 
 class SalaryVacancy(GetVacancy):

@@ -6,7 +6,7 @@ import json
 
 
 def for_usr(q) -> None:
-    if q.isalpha() or 3 < int(q) < 1:
+    if q.isalpha() or 3 < int(q) or 1 > int(q):
         print("Указан некорректный номер запроса")
     else:
         q = int(q)
@@ -40,7 +40,7 @@ def for_usr(q) -> None:
             """вызывает класс в который передается id искомой вакансии"""
             search_id = int(input("введите id понравившейся вакансии, чтобы узнать больше информации: "))
             id_vac = CertainVacancy(search, search_id)
-            id_vac.full_info()
+            print(id_vac.full_info())
 
 
 question = input("Это небольшая программа для поиска вакансий на HH.ru.\n"

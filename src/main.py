@@ -2,6 +2,8 @@ from src.classes import GetVacancy
 from src.classes import CertainVacancy
 from src.classes import SalaryVacancy
 
+import json
+
 
 def for_usr(q) -> None:
     if q.isalpha() or 3 < int(q) < 1:
@@ -21,7 +23,7 @@ def for_usr(q) -> None:
                       f"Ссылка - {i['url']}\n")
 
         if q == 2:
-            top = input("Сколько вакансий вы хотите получить")
+            top = input("Сколько вакансий вы хотите получить - ")
             """вызывает класс в который передается, какой топ вывести"""
             top_salary = SalaryVacancy(search)
             top_salary = top_salary.sorted_salary(10)
@@ -41,10 +43,10 @@ def for_usr(q) -> None:
             id_vac.full_info()
 
 
-question = input("Это небольшая программа для поиска вакансий на HH.ru.\n"
-                 "Введите номер интересующего вас вопроса, чтобы продолжить:\n"
-                 "1 Ввести поисковый запрос для запроса вакансий из hh.ru\n"
-                 "2 Получить топ N вакансий по зарплате\n"
-                 "3 Полная информация о вакансии\n")
-
-for_usr(question)
+# question = input("Это небольшая программа для поиска вакансий на HH.ru.\n"
+#                  "Введите номер интересующего вас вопроса, чтобы продолжить:\n"
+#                  "1 Ввести поисковый запрос для запроса вакансий из hh.ru\n"
+#                  "2 Получить топ N вакансий по зарплате\n"
+#                  "3 Полная информация о вакансии\n")
+#
+# for_usr(question)

@@ -89,7 +89,7 @@ class CertainVacancy(GetVacancy):
 
     def full_info(self):
         info_json = requests.get(f"https://api.hh.ru/vacancies/{self.id}")
-        print(json.dumps(info_json.json(), indent=2, ensure_ascii=False))
+        return json.dumps(info_json.json(), indent=2, ensure_ascii=False)
 
 
 class SalaryVacancy(GetVacancy):
@@ -110,12 +110,14 @@ class SalaryVacancy(GetVacancy):
             pass
         unsort_list = self.get_vacancies
 
-        for i in range(0, len(unsort_list)-3):
+        i = 0
+        while i < len(unsort_list):
             if isinstance(unsort_list[i]["salary"], type(None)):
                 unsort_list.remove(unsort_list[i])
                 i -= 1
-            if isinstance(unsort_list[i]["salary"]["from"], type(None)):
+            if "from" in unsort_list[i]["salary"] and isinstance(unsort_list[i]["salary"]["from"], type(None)):
                 del unsort_list[i]["salary"]["from"]
+            i += 1
 
         def get_actual_salary(x):
             if isinstance(x["salary"], dict):
